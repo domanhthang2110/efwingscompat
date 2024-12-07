@@ -1,0 +1,7 @@
+{
+  "layer_type": "epicfight:model_original",
+  "target_layer": "me.paulf.wings.client.renderer.LayerWings",
+  "joint": "Chest",
+  "translation": [0.0, 0.5, 0.0],
+  "rotation": [0.0, 0.0, 0.0]
+}
