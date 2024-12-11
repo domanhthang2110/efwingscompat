@@ -24,19 +24,13 @@ public class RenderHandEventHandler {
     public static void onRenderHand(RenderHandEvent event) {
         PoseStack poseStack = event.getPoseStack();
         LocalPlayer player = Minecraft.getInstance().player;
-
         Flights.get(player).ifPresent(flight -> {
             if (flight.isFlying()) {
                 // Clone current transformation
                 Matrix4f transform = new Matrix4f(poseStack.last().pose());
-
-
-
                 assert player != null;
-
                 // Get the camera's pitch (X rotation)
                 float cameraXRot = Minecraft.getInstance().gameRenderer.getMainCamera().getXRot(); // Camera pitch (view angle)
-
                 // Calculate the desired rotation based on camera's X rotation (pitch)
                 float targetRotation = 0;
                 if (player.isUsingItem() && player.getUseItem().getItem() instanceof BowItem) {
@@ -48,9 +42,7 @@ public class RenderHandEventHandler {
                     transform.translate(0.0F, -0.4F, 0F);
                 }
                 // Apply the rotation directly without smoothing
-                transform.rotateX((float) (targetRotation * 1.05));
-                LogUtils.getLogger().info("Cam angle {}", cameraXRot);
-                LogUtils.getLogger().info("Target rot {}", Math.toDegrees(targetRotation));
+                transform.rotateX(targetRotation);
                 poseStack.last().pose().set(transform);  // Apply the transformation immediately
             }
         });

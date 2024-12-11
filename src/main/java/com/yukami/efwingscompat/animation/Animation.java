@@ -31,8 +31,8 @@ public class Animation {
     }
 
     public static final AnimationProperty.PoseModifier FLYING_CORRECTION = (self, pose, entitypatch, elapsedTime, partialTicks) -> {
-        Vec3 vec3d = ((LivingEntity)entitypatch.getOriginal()).getViewVector(partialTicks);
-        Vec3 vec3d1 = ((LivingEntity)entitypatch.getOriginal()).getDeltaMovement();
+        Vec3 vec3d = entitypatch.getOriginal().getViewVector(partialTicks);
+        Vec3 vec3d1 = entitypatch.getOriginal().getDeltaMovement();
         double d0 = vec3d1.horizontalDistanceSqr();
         double d1 = vec3d.horizontalDistanceSqr();
         if (d0 > (double)0.0F && d1 > (double)0.0F) {

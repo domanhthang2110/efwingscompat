@@ -13,9 +13,9 @@ public class EFWingsCompat
 {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "efwingscompat";
-    public EFWingsCompat()
+    public EFWingsCompat(FMLJavaModLoadingContext context)
     {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus bus = context.getModEventBus();
         bus.addListener(Animation::registerAnimations);
         LivingMotion.ENUM_MANAGER.registerEnumCls(EFWingsCompat.MODID, EFLivingMotions.class);
     }
