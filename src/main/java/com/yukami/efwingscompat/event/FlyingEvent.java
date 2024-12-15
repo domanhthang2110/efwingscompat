@@ -1,5 +1,6 @@
 package com.yukami.efwingscompat.event;
 
+import com.yukami.efwingscompat.animation.Animation;
 import com.yukami.efwingscompat.animation.EFLivingMotions;
 import me.paulf.wings.server.flight.Flights;
 import net.minecraft.client.player.LocalPlayer;
@@ -40,7 +41,7 @@ public class FlyingEvent {
                 if (clientPatch != null && flight.isFlying()) {
                     clientPatch.currentLivingMotion = EFLivingMotions.WING;
                     //clientPatch.playAnimationSynchronized(clientPatch.getAnimator().getLivingAnimation(EFLivingMotions.WING, Animations.DUMMY_ANIMATION), 0.0f);
-                    EpicFightNetworkManager.sendToServer(new CPPlayAnimation(Animations.BIPED_FLYING, 0.0f, false, false));
+                    EpicFightNetworkManager.sendToServer(new CPPlayAnimation(Animation.WINGFLY_FORWARD, 0.0f, true, false));
 
                 }
                 //LogUtils.getLogger().info(String.valueOf(clientPatch.getAnimator().getLivingAnimation(clientPatch.getCurrentLivingMotion(), Animations.DUMMY_ANIMATION)));

@@ -15,6 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.logging.Logger;
 
@@ -26,24 +27,30 @@ public class RenderHandEventHandler {
         LocalPlayer player = Minecraft.getInstance().player;
         Flights.get(player).ifPresent(flight -> {
             if (flight.isFlying()) {
-                // Clone current transformation
-                Matrix4f transform = new Matrix4f(poseStack.last().pose());
+                // Store the existing transformation
+                Matrix4f existingTransform = new Matrix4f(poseStack.last().pose());
+
+                // Create our new transformation
+                Matrix4f ourTransform = new Matrix4f(existingTransform);
                 assert player != null;
-                // Get the camera's pitch (X rotation)
-                float cameraXRot = Minecraft.getInstance().gameRenderer.getMainCamera().getXRot(); // Camera pitch (view angle)
-                // Calculate the desired rotation based on camera's X rotation (pitch)
+                float cameraXRot = Minecraft.getInstance().gameRenderer.getMainCamera().getXRot();
                 float targetRotation = 0;
+
                 if (player.isUsingItem() && player.getUseItem().getItem() instanceof BowItem) {
-                    // When using a BowItem, apply different translation
-                    transform.translate(0.0F, -0.5F, 0F);
+                    ourTransform.translate(0.0F, -0.5F, 0F);
                 } else {
-                    // When not using a BowItem, calculate rotation based on camera angle
-                    targetRotation = (float) Math.toRadians(Math.min(Math.max(cameraXRot, -45), 70));
-                    transform.translate(0.0F, -0.4F, 0F);
+                    targetRotation = (float) (Math.toRadians(Math.min(Math.max(cameraXRot, -70), 90)) + Math.toRadians(10.0f));
+                    ourTransform.translate(0.0F, -0.3F, 0F);
                 }
-                // Apply the rotation directly without smoothing
-                transform.rotateX(targetRotation);
-                poseStack.last().pose().set(transform);  // Apply the transformation immediately
+
+                ourTransform.rotateX(targetRotation);
+                ourTransform.setTranslation(0.0f, ourTransform.getTranslation(new Vector3f()).y, 0.0f);
+
+                // Combine transformations
+                existingTransform.mul(ourTransform);
+
+                // Apply combined transformation
+                poseStack.last().pose().set(existingTransform);
             }
         });
     }
