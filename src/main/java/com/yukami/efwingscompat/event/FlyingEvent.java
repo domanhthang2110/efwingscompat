@@ -40,7 +40,8 @@ public class FlyingEvent {
                 LocalPlayerPatch clientPatch = (LocalPlayerPatch) event.getPlayerPatch();
                 if (clientPatch != null && flight.isFlying()) {
                     clientPatch.currentLivingMotion = EFLivingMotions.WING;
-                    //clientPatch.playAnimationSynchronized(clientPatch.getAnimator().getLivingAnimation(EFLivingMotions.WING, Animations.DUMMY_ANIMATION), 0.0f);
+                    //clientPatch.playAnimationSynchronized(Animation.WINGFLY_FORWARD, 0.0f);
+                    //clientPatch.getAnimator().playAnimation(Animation.WINGFLY_FORWARD, 0.0f);
                     EpicFightNetworkManager.sendToServer(new CPPlayAnimation(Animation.WINGFLY_FORWARD, 0.0f, true, false));
 
                 }
