@@ -9,6 +9,7 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 import yesman.epicfight.api.animation.JointTransform;
 import yesman.epicfight.api.animation.property.AnimationProperty;
+import yesman.epicfight.api.animation.types.EntityState;
 import yesman.epicfight.api.animation.types.MovementAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.forgeevent.AnimationRegistryEvent;
@@ -29,11 +30,9 @@ public class Animation {
 
     protected static void Build(){
         HumanoidArmature biped = Armatures.BIPED;
-        //One-handed chanting
-        WINGFLY_FORWARD =  new MovementAnimation(EpicFightOptions.GENERAL_ANIMATION_CONVERT_TIME, true, "biped/living/wingfly_forward", biped)
+        WINGFLY_FORWARD = new StaticAnimation(EpicFightOptions.GENERAL_ANIMATION_CONVERT_TIME, true, "biped/living/wingfly_forward", biped)
                 .addProperty(AnimationProperty.StaticAnimationProperty.POSE_MODIFIER, Animation.FLYING_CORRECTION);
     }
-
 
     public static final AnimationProperty.PoseModifier FLYING_CORRECTION = (self, pose, entitypatch, elapsedTime, partialTicks) -> {
         AbstractClientPlayer player = (AbstractClientPlayer) entitypatch.getOriginal();
