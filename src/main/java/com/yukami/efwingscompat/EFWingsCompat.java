@@ -17,7 +17,10 @@ public class EFWingsCompat
     {
         FMLJavaModLoadingContext context = FMLJavaModLoadingContext.get();
         IEventBus bus = context.getModEventBus();
+        
         bus.addListener(Animation::registerAnimations);
+        
         LivingMotion.ENUM_MANAGER.registerEnumCls(EFWingsCompat.MODID, EFLivingMotions.class);
     }
+
 }
